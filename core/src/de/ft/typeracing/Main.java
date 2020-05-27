@@ -6,24 +6,29 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class Main extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
+	Texture img_strasse;
 	BitmapFont font;
-	
+
 	float speed = 0;
 
 	long millissave=0;
+
+	int strassenbewegungsposition=0;
+	int strasse_x=0;
+	int strasse_y=0;
+
+
 
 	@Override
 	public void create () {
 
 
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img_strasse = new Texture("strasse.png");
 		font = new BitmapFont();
 
 		Gdx.app.setLogLevel(Application.LOG_INFO);
@@ -78,6 +83,9 @@ public class Main extends ApplicationAdapter {
 			}
 		});
 
+
+
+
 	}
 	@Override
 	public void render () {
@@ -88,10 +96,13 @@ public class Main extends ApplicationAdapter {
 		if(System.currentTimeMillis()>millissave){
 
 
-			if(speed>0) {
-				speed--;
-			}
+
+				speed-=1;
+
 			millissave=System.currentTimeMillis()+400;
+			if(speed<0) {
+				speed=0;
+			}
 		}
 
 
@@ -113,13 +124,20 @@ public class Main extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(img, 0, 0);
+		strassenbewegungsposition+=(int)speed;
+		if(strassenbewegungsposition>img_strasse.getWidth()){
+			strassenbewegungsposition=0;
+		}
+		batch.draw(img_strasse, strasse_x+strassenbewegungsposition, strasse_y);
+		batch.draw(img_strasse, strassenbewegungsposition-img_strasse.getWidth(), strasse_y);
+
+
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		img_strasse.dispose();
 	}
 }
