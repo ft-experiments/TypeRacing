@@ -13,16 +13,11 @@ public class Main extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	BitmapFont font;
-
-	long timelastpressed = 0;
-	long timepressaverage =0;
-
+	
 	float speed = 0;
 
 	long millissave=0;
 
-	long presser=1;
-	
 	@Override
 	public void create () {
 
@@ -33,17 +28,15 @@ public class Main extends ApplicationAdapter {
 
 		Gdx.app.setLogLevel(Application.LOG_INFO);
 
-		timelastpressed = System.currentTimeMillis();
 
 
 		Gdx.input.setInputProcessor(new InputProcessor() {
 			@Override
 			public boolean keyDown(int keycode) {
-				timepressaverage = timepressaverage + System.currentTimeMillis() - timelastpressed;
-				timelastpressed = System.currentTimeMillis();
-				presser++;
 
-				speed++;
+				if(speed<99) {
+					speed++;
+				}
 
 				return false;
 			}
