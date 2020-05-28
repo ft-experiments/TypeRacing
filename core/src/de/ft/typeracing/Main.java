@@ -128,7 +128,7 @@ public class Main extends ApplicationAdapter {
 
 
 
-				speed-=1;
+			speed = speed + ((99 - speed) / 95);
 
 
 if(speed>9) {
