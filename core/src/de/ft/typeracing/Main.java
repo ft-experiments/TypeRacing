@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import de.ft.typeracing.car.Car;
 
 
 public class Main extends ApplicationAdapter {
@@ -35,6 +36,8 @@ public class Main extends ApplicationAdapter {
 	public static String anzeige_text="";
 
 	public static boolean fehler=false;
+
+	public static Car spielerauto=new Car();
 
 public static boolean fmode = false;
 
@@ -89,7 +92,7 @@ public static boolean fmode = false;
 						if(!fmode) {
 							speed = speed + ((99 - speed) / 60);
 						}else{
-							speed = speed +20;
+							speed = speed +1;
 						}
 
 					}
@@ -98,7 +101,13 @@ public static boolean fmode = false;
 					fehler=false;
 				}else{
 					fehler=true;
-					speed=speed-speed/4.5f;
+					if(!fmode) {
+						speed = speed - speed / 4.5f;
+					}else{
+						if(speed>0) {
+							speed = speed - 1;
+						}
+					}
 				}
 				return false;
 			}
@@ -157,23 +166,29 @@ neuesSpiel();
 
 		if (System.currentTimeMillis() > millissave) {
 
-
+			if(!fmode) {
 			speed -= 1;
 
 
-			if (speed > 9) {
+	if (speed > 9) {
 
-				if (speed < 34) {
-					millissave = (long) ((long) System.currentTimeMillis() + 250 - speed * 2);
-				} else {
-					millissave = System.currentTimeMillis() + 180;
+		if (speed < 34) {
+			millissave = (long) ((long) System.currentTimeMillis() + 250 - speed * 2);
+		} else {
+			millissave = System.currentTimeMillis() + 180;
+		}
+	} else {
+		millissave = System.currentTimeMillis() + 600;
+	}
+	if (speed < 0) {
+		speed = 0;
+	}
+}else{
+				if(speed>0) {
+					speed -= 1;
 				}
-			} else {
-				millissave = System.currentTimeMillis() + 600;
-			}
-			if (speed < 0) {
-				speed = 0;
-			}
+	millissave=System.currentTimeMillis() + 400;
+}
 		}
 
 
