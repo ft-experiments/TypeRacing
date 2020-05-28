@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import de.ft.typeracing.car.Car;
+import de.ft.typeracing.car.CarSteuerung;
+import de.ft.typeracing.car.steuerung.TimsSteuerung;
 
 
 public class Main extends ApplicationAdapter {
@@ -37,7 +39,8 @@ public class Main extends ApplicationAdapter {
 
 	public static boolean fehler=false;
 
-	public static Car spielerauto=new Car();
+
+	public static Car spielerauto=new Car(new TimsSteuerung());
 
 public static boolean fmode = false;
 

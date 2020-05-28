@@ -1,4 +1,4 @@
-package de.ft.typeracing.car.carsteuerungen;
+package de.ft.typeracing.car.steuerung;
 
 import de.ft.typeracing.car.CarSteuerung;
 
