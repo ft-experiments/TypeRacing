@@ -120,7 +120,7 @@ neuesSpiel();
 	}
 
 	public static void neuesSpiel(){
-		current_text=Texte.Text5;
+		current_text=Texte.Text8;
 		anzeige_text=current_text;
 	}
 	public static void SpielFertig(){
