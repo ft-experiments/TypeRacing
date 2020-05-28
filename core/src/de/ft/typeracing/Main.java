@@ -47,10 +47,10 @@ public class Main extends ApplicationAdapter {
 			public boolean keyDown(int keycode) {
 
 				if(speed<99) {
-					speed=speed+((99-speed)/90);
+					speed=speed+((99-speed)/95);
 				}
 
-				Gdx.app.log("Speed", String.valueOf(((99-speed)/97)));
+		//		Gdx.app.log("Speed", String.valueOf(((99-speed)/97)));
 
 				return false;
 			}
@@ -98,8 +98,9 @@ public class Main extends ApplicationAdapter {
 	}
 	@Override
 	public void render () {
-		//	Gdx.app.log("Average", String.valueOf(speed));
+		 //	Gdx.app.log("Average", String.valueOf(speed));
 
+		Gdx.app.log("FPS", String.valueOf(Gdx.graphics.getFramesPerSecond()));
 
 
 		if(System.currentTimeMillis()>millissave){
@@ -111,7 +112,7 @@ public class Main extends ApplicationAdapter {
 
 if(speed>9) {
 
-	if(speed<25) {
+	if(speed<34) {
 		millissave = (long) ((long) System.currentTimeMillis() + 250 - speed * 2);
 	}else{
 		millissave = System.currentTimeMillis() + 180;
@@ -143,7 +144,7 @@ if(speed>9) {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		strassenbewegungsposition+=(int)speed;
+		strassenbewegungsposition+=(int)speed*1.5f;
 		if(strassenbewegungsposition>img_strasse.getWidth()){
 			strassenbewegungsposition=0;
 		}
