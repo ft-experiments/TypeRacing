@@ -33,10 +33,12 @@ public class Main extends ApplicationAdapter {
 	public static String current_text="";
 	public static String anzeige_text="";
 
-
+public static boolean fmode = false;
 
 	@Override
 	public void create () {
+
+
 
 
 		try {
@@ -80,10 +82,19 @@ public class Main extends ApplicationAdapter {
 				if(anzeige_text.startsWith(Character.toString(character))) {
 					anzeige_text = anzeige_text.substring(1);
 					if (speed < 99) {
-						speed = speed + ((99 - speed) / 90);
+
+						if(!fmode) {
+							speed = speed + ((99 - speed) / 60);
+						}else{
+							speed = speed +20;
+						}
+
 					}
 
 					Gdx.app.log("Speed", String.valueOf(((99 - speed) / 97)));
+				}else{
+
+					speed=speed-speed/4.5f;
 				}
 				return false;
 			}
@@ -120,8 +131,9 @@ neuesSpiel();
 	}
 
 	public static void neuesSpiel(){
-		current_text=Texte.Text8;
+		current_text=Texte.Text3;
 		anzeige_text=current_text;
+
 	}
 	public static void SpielFertig(){
 
@@ -132,8 +144,12 @@ neuesSpiel();
 	public void render () {
 		 //	Gdx.app.log("Average", String.valueOf(speed));
 
-		Gdx.app.log("FPS", String.valueOf(Gdx.graphics.getFramesPerSecond()));
 
+		if(Gdx.input.isKeyJustPressed(Input.Keys.F)&&Gdx.input.isKeyJustPressed(Input.Keys.T)&&Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+			fmode = true;
+			current_text = "You found an Easteregg. Viel Spaß damit noch! Vielen dank für die benutzung von TypeRacing!";
+			anzeige_text=current_text;
+		}
 
 		if(System.currentTimeMillis()>millissave){
 
@@ -176,7 +192,7 @@ if(speed>9) {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		strassenbewegungsposition+=(int)speed*1.5f;
+		strassenbewegungsposition+=(int)speed;
 		if(strassenbewegungsposition>img_strasse.getWidth()){
 			strassenbewegungsposition=0;
 		}
