@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 
 public class Main extends ApplicationAdapter {
@@ -17,6 +17,7 @@ public class Main extends ApplicationAdapter {
 	private static final GlyphLayout glyphLayout = new GlyphLayout();
 
 	Texture img_strasse;
+	Texture img_amatur;
 
 	float speed = 0;
 
@@ -26,7 +27,10 @@ public class Main extends ApplicationAdapter {
 	int strasse_x=0;
 	int strasse_y=0;
 
+	int textfeldheight=130;
+
 	String current_text="";
+	String anzeige_text="";
 
 
 
@@ -34,9 +38,25 @@ public class Main extends ApplicationAdapter {
 	public void create () {
 
 
+		try {
+			//schriftart
+			FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("comicsans.ttf"));
+			FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+			parameter.size = 50;
+			font = generator.generateFont(parameter); // font size 12 pixels
+			generator.dispose(); // don't forget to dispose to avoid memory leaks!
+		} catch (Exception e) {
+			System.out.println("Fehler beim Laden der Schrift");
+		}
+
+
+		current_text=Texte.Text5;
+		anzeige_text=current_text;
+
 		batch = new SpriteBatch();
+		img_amatur = new Texture("amatur.png");
 		img_strasse = new Texture("strasse.png");
-		font = new BitmapFont();
+
 
 		Gdx.app.setLogLevel(Application.LOG_INFO);
 
@@ -62,7 +82,14 @@ public class Main extends ApplicationAdapter {
 
 			@Override
 			public boolean keyTyped(char character) {
+				if(anzeige_text.startsWith(Character.toString(character))) {
+					anzeige_text = anzeige_text.substring(1);
+					if (speed < 99) {
+						speed = speed + ((99 - speed) / 90);
+					}
 
+					Gdx.app.log("Speed", String.valueOf(((99 - speed) / 97)));
+				}
 				return false;
 			}
 
@@ -148,9 +175,15 @@ if(speed>9) {
 		if(strassenbewegungsposition>img_strasse.getWidth()){
 			strassenbewegungsposition=0;
 		}
-		batch.draw(img_strasse, strasse_x+strassenbewegungsposition, strasse_y);
-		batch.draw(img_strasse, strassenbewegungsposition-img_strasse.getWidth(), strasse_y);
+		strasse_y=textfeldheight;
+		batch.draw(img_strasse, strasse_x-strassenbewegungsposition, strasse_y,img_strasse.getWidth(),Gdx.graphics.getHeight()-textfeldheight);
+		batch.draw(img_strasse, strasse_x-strassenbewegungsposition+img_strasse.getWidth(), strasse_y,img_strasse.getWidth(),Gdx.graphics.getHeight()-textfeldheight);
+		//batch.draw(img_strasse, strasse_x+strassenbewegungsposition+img_strasse.getWidth(), strasse_y);
 
+		batch.draw(img_amatur, 0,0,Gdx.graphics.getWidth(),textfeldheight);
+
+		glyphLayout.setText(font, anzeige_text);
+		font.draw(batch, glyphLayout, 100, textfeldheight/2+glyphLayout.height/2 );
 
 		batch.end();
 	}
