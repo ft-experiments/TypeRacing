@@ -30,6 +30,7 @@ public class Main extends ApplicationAdapter {
 	int textfeldheight=130;
 
 	String current_text="";
+	String anzeige_text="";
 
 
 
@@ -49,7 +50,8 @@ public class Main extends ApplicationAdapter {
 		}
 
 
-current_text=Texte.Text1;
+		current_text=Texte.Text5;
+		anzeige_text=current_text;
 
 		batch = new SpriteBatch();
 		img_amatur = new Texture("amatur.png");
@@ -64,11 +66,6 @@ current_text=Texte.Text1;
 			@Override
 			public boolean keyDown(int keycode) {
 
-				if(speed<99) {
-					speed=speed+((99-speed)/90);
-				}
-
-				Gdx.app.log("Speed", String.valueOf(((99-speed)/97)));
 
 				return false;
 			}
@@ -80,7 +77,14 @@ current_text=Texte.Text1;
 
 			@Override
 			public boolean keyTyped(char character) {
+				if(anzeige_text.startsWith(Character.toString(character))) {
+					anzeige_text = anzeige_text.substring(1);
+					if (speed < 99) {
+						speed = speed + ((99 - speed) / 90);
+					}
 
+					Gdx.app.log("Speed", String.valueOf(((99 - speed) / 97)));
+				}
 				return false;
 			}
 
@@ -172,7 +176,7 @@ if(speed>9) {
 
 		batch.draw(img_amatur, 0,0,Gdx.graphics.getWidth(),textfeldheight);
 
-		glyphLayout.setText(font, current_text);
+		glyphLayout.setText(font, anzeige_text);
 		font.draw(batch, glyphLayout, 100, textfeldheight/2+glyphLayout.height/2 );
 
 		batch.end();
