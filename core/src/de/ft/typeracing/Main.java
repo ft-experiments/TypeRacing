@@ -44,6 +44,9 @@ public class Main extends ApplicationAdapter {
 	public static long timelastpress=0;
 
 	public static Car spielerauto=new Car(new NormalSteuerung());
+	private static boolean fehlercounted = false;
+	public static int fehlercounter = 0;
+
  public static float cpm = 0;
 
 
@@ -211,10 +214,21 @@ neuesSpiel();
 		glyphLayout.setText(font, anzeige_text, new Color(1, 1, 1, 1), glyphLayout.width, (int) glyphLayout.height, false);
 		font.draw(batch, glyphLayout, 100, textfeldheight / 2 + glyphLayout.height / 2);
 		if (fehler){
+
+			if(!fehlercounted) {
+				fehlercounter++;
+				fehlercounted = true;
+			}
+
 			glyphLayout.setText(font, anzeige_text.substring(0, 1));
 			glyphLayout.setText(font, anzeige_text.substring(0, 1), new Color(1, 0, 0, 1), glyphLayout.width, (int) glyphLayout.height, false);
 			font.draw(batch, glyphLayout, 100, textfeldheight / 2 + glyphLayout.height / 2);
 		}
+
+		if(!fehler&&fehlercounted) {
+			fehlercounted = false;
+		}
+
 
 
 		batch.draw(img_amaturrahmen, 0,0,Gdx.graphics.getWidth(),textfeldheight);

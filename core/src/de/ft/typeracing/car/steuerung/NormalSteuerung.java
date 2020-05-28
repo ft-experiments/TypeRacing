@@ -9,7 +9,11 @@ public class NormalSteuerung implements CarSteuerung {
     public float correctKeyTyped(float speed) {
         if (speed < 99) {
 
-            speed = speed + ((99 - speed) / 60);
+            if(((99 - speed) / 60)>0.77f) {
+                speed = speed + ((99 - speed) / 60);
+            }else{
+                speed = 0.77f;
+            }
 
 
         }
