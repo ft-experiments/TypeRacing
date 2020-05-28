@@ -40,8 +40,10 @@ public class Main extends ApplicationAdapter {
 			public boolean keyDown(int keycode) {
 
 				if(speed<99) {
-					speed++;
+					speed=speed+((99-speed)/90);
 				}
+
+				Gdx.app.log("Speed", String.valueOf(((99-speed)/97)));
 
 				return false;
 			}
@@ -89,7 +91,7 @@ public class Main extends ApplicationAdapter {
 	}
 	@Override
 	public void render () {
-			Gdx.app.log("Average", String.valueOf(speed));
+		//	Gdx.app.log("Average", String.valueOf(speed));
 
 
 
@@ -99,7 +101,17 @@ public class Main extends ApplicationAdapter {
 
 				speed-=1;
 
-			millissave=System.currentTimeMillis()+400;
+
+if(speed>9) {
+
+	if(speed<25) {
+		millissave = (long) ((long) System.currentTimeMillis() + 250 - speed * 2);
+	}else{
+		millissave = System.currentTimeMillis() + 180;
+	}
+}else{
+	millissave =  System.currentTimeMillis() + 600;
+}
 			if(speed<0) {
 				speed=0;
 			}
