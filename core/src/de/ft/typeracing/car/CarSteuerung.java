@@ -1,6 +1,7 @@
 package de.ft.typeracing.car;
 
 public interface CarSteuerung {
-    void correctKeyTyped();
-    void dagegenarbeiter();
+    float correctKeyTyped(float speed);
+    float dagegenarbeiter(float speed);
+    float fehler(float speed);
 }

@@ -9,8 +9,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import de.ft.typeracing.car.Car;
-import de.ft.typeracing.car.CarSteuerung;
-import de.ft.typeracing.car.steuerung.TimsSteuerung;
+import de.ft.typeracing.car.steuerung.NormalSteuerung;
 
 
 public class Main extends ApplicationAdapter {
@@ -40,9 +39,9 @@ public class Main extends ApplicationAdapter {
 	public static boolean fehler=false;
 
 
-	public static Car spielerauto=new Car(new TimsSteuerung());
+	public static Car spielerauto=new Car(new NormalSteuerung());
 
-public static boolean fmode = false;
+
 
 	@Override
 	public void create () {
@@ -90,27 +89,13 @@ public static boolean fmode = false;
 			public boolean keyTyped(char character) {
 				if(anzeige_text.startsWith(Character.toString(character))) {
 					anzeige_text = anzeige_text.substring(1);
-					if (speed < 99) {
-
-						if(!fmode) {
-							speed = speed + ((99 - speed) / 60);
-						}else{
-							speed = speed +1;
-						}
-
-					}
-
-					Gdx.app.log("Speed", String.valueOf(((99 - speed) / 97)));
+					speed=spielerauto.getCarSteuerung().correctKeyTyped(speed);
 					fehler=false;
 				}else{
 					fehler=true;
-					if(!fmode) {
-						speed = speed - speed / 4.5f;
-					}else{
-						if(speed>0) {
-							speed = speed - 1;
-						}
-					}
+
+					speed=spielerauto.getCarSteuerung().fehler(speed);
+
 				}
 				return false;
 			}
@@ -162,37 +147,11 @@ neuesSpiel();
 
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.F) && Gdx.input.isKeyJustPressed(Input.Keys.T) && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-			fmode = true;
 			current_text = "You found an Easteregg. Viel Spaß damit noch! Vielen dank für die benutzung von TypeRacing!";
 			anzeige_text = current_text;
 		}
 
-		if (System.currentTimeMillis() > millissave) {
-
-			if(!fmode) {
-			speed -= 1;
-
-
-	if (speed > 9) {
-
-		if (speed < 34) {
-			millissave = (long) ((long) System.currentTimeMillis() + 250 - speed * 2);
-		} else {
-			millissave = System.currentTimeMillis() + 180;
-		}
-	} else {
-		millissave = System.currentTimeMillis() + 600;
-	}
-	if (speed < 0) {
-		speed = 0;
-	}
-}else{
-				if(speed>0) {
-					speed -= 1;
-				}
-	millissave=System.currentTimeMillis() + 400;
-}
-		}
+			speed=spielerauto.getCarSteuerung().dagegenarbeiter(speed);
 
 
 
