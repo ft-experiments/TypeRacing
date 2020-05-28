@@ -4,14 +4,19 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 
 public class Main extends ApplicationAdapter {
-	SpriteBatch batch;
+	public static SpriteBatch batch;
+
+
+	public static BitmapFont font;
+	private static final GlyphLayout glyphLayout = new GlyphLayout();
+
 	Texture img_strasse;
-	BitmapFont font;
 
 	float speed = 0;
 
@@ -20,6 +25,8 @@ public class Main extends ApplicationAdapter {
 	int strassenbewegungsposition=0;
 	int strasse_x=0;
 	int strasse_y=0;
+
+	String current_text="";
 
 
 
