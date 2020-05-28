@@ -38,9 +38,13 @@ public class Main extends ApplicationAdapter {
 
 	public static boolean fehler=false;
 
+	public static long timebetweenpresses=0;
+	public static long presses=0;
+
+	public static long timelastpress=0;
 
 	public static Car spielerauto=new Car(new NormalSteuerung());
-
+ public static float cpm = 0;
 
 
 	@Override
@@ -91,12 +95,37 @@ public class Main extends ApplicationAdapter {
 					anzeige_text = anzeige_text.substring(1);
 					speed=spielerauto.getCarSteuerung().correctKeyTyped(speed);
 					fehler=false;
+
+					if(presses>0) {
+
+
+						//Calc CPM
+						if(System.currentTimeMillis()-timelastpress<4000) {
+							presses++;
+							timebetweenpresses = timebetweenpresses + System.currentTimeMillis() - timelastpress;
+							timelastpress = System.currentTimeMillis();
+							cpm = (60000f/((float)timebetweenpresses / (float) presses));
+						}else{
+							timelastpress = System.currentTimeMillis();
+						}
+
+
+					}else{
+						presses=1;
+						timelastpress = System.currentTimeMillis();
+					}
+
 				}else{
 					fehler=true;
 
 					speed=spielerauto.getCarSteuerung().fehler(speed);
 
 				}
+
+
+
+
+
 				return false;
 			}
 
@@ -144,8 +173,6 @@ neuesSpiel();
 	@Override
 	public void render () {
 		//	Gdx.app.log("Average", String.valueOf(speed));
-
-
 		if (Gdx.input.isKeyJustPressed(Input.Keys.F) && Gdx.input.isKeyJustPressed(Input.Keys.T) && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
 			current_text = "You found an Easteregg. Viel Spaß damit noch! Vielen dank für die benutzung von TypeRacing!";
 			anzeige_text = current_text;
