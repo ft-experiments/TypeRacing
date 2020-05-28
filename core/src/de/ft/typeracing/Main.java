@@ -34,6 +34,8 @@ public class Main extends ApplicationAdapter {
 	public static String current_text="";
 	public static String anzeige_text="";
 
+	public static boolean fehler=false;
+
 public static boolean fmode = false;
 
 	@Override
@@ -93,8 +95,9 @@ public static boolean fmode = false;
 					}
 
 					Gdx.app.log("Speed", String.valueOf(((99 - speed) / 97)));
+					fehler=false;
 				}else{
-
+					fehler=true;
 					speed=speed-speed/4.5f;
 				}
 				return false;
@@ -143,34 +146,33 @@ neuesSpiel();
 
 	@Override
 	public void render () {
-		 //	Gdx.app.log("Average", String.valueOf(speed));
+		//	Gdx.app.log("Average", String.valueOf(speed));
 
 
-		if(Gdx.input.isKeyJustPressed(Input.Keys.F)&&Gdx.input.isKeyJustPressed(Input.Keys.T)&&Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.F) && Gdx.input.isKeyJustPressed(Input.Keys.T) && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
 			fmode = true;
 			current_text = "You found an Easteregg. Viel Spaß damit noch! Vielen dank für die benutzung von TypeRacing!";
-			anzeige_text=current_text;
+			anzeige_text = current_text;
 		}
 
-		if(System.currentTimeMillis()>millissave){
+		if (System.currentTimeMillis() > millissave) {
 
 
+			speed -= 1;
 
-				speed-=1;
 
+			if (speed > 9) {
 
-if(speed>9) {
-
-	if(speed<34) {
-		millissave = (long) ((long) System.currentTimeMillis() + 250 - speed * 2);
-	}else{
-		millissave = System.currentTimeMillis() + 180;
-	}
-}else{
-	millissave =  System.currentTimeMillis() + 600;
-}
-			if(speed<0) {
-				speed=0;
+				if (speed < 34) {
+					millissave = (long) ((long) System.currentTimeMillis() + 250 - speed * 2);
+				} else {
+					millissave = System.currentTimeMillis() + 180;
+				}
+			} else {
+				millissave = System.currentTimeMillis() + 600;
+			}
+			if (speed < 0) {
+				speed = 0;
 			}
 		}
 
@@ -187,31 +189,28 @@ if(speed>9) {
 */
 
 
-
-
-
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		strassenbewegungsposition+=(int)speed;
-		if(strassenbewegungsposition>img_strasse.getWidth()){
-			strassenbewegungsposition=0;
+		strassenbewegungsposition += (int) speed;
+		if (strassenbewegungsposition > img_strasse.getWidth()) {
+			strassenbewegungsposition = 0;
 		}
-		strasse_y=textfeldheight;
-		batch.draw(img_strasse, strasse_x-strassenbewegungsposition, strasse_y,img_strasse.getWidth(),Gdx.graphics.getHeight()-textfeldheight);
-		batch.draw(img_strasse, strasse_x-strassenbewegungsposition+img_strasse.getWidth(), strasse_y,img_strasse.getWidth(),Gdx.graphics.getHeight()-textfeldheight);
+		strasse_y = textfeldheight;
+		batch.draw(img_strasse, strasse_x - strassenbewegungsposition, strasse_y, img_strasse.getWidth(), Gdx.graphics.getHeight() - textfeldheight);
+		batch.draw(img_strasse, strasse_x - strassenbewegungsposition + img_strasse.getWidth(), strasse_y, img_strasse.getWidth(), Gdx.graphics.getHeight() - textfeldheight);
 		//batch.draw(img_strasse, strasse_x+strassenbewegungsposition+img_strasse.getWidth(), strasse_y);
 
-		batch.draw(img_amatur, 0,0,Gdx.graphics.getWidth(),textfeldheight);
+		batch.draw(img_amatur, 0, 0, Gdx.graphics.getWidth(), textfeldheight);
 
 		glyphLayout.setText(font, anzeige_text);
-		glyphLayout.setText(font,anzeige_text,new Color(1,1,1,1),glyphLayout.width,(int)glyphLayout.height,false);
-		font.draw(batch, glyphLayout, 100, textfeldheight/2+glyphLayout.height/2 );
-
-		glyphLayout.setText(font,anzeige_text.substring(0,1));
-		glyphLayout.setText(font,anzeige_text.substring(0,1),new Color(1,0,0,1),glyphLayout.width,(int)glyphLayout.height,false);
-		font.draw(batch, glyphLayout, 100, textfeldheight/2+glyphLayout.height/2 );
-
+		glyphLayout.setText(font, anzeige_text, new Color(1, 1, 1, 1), glyphLayout.width, (int) glyphLayout.height, false);
+		font.draw(batch, glyphLayout, 100, textfeldheight / 2 + glyphLayout.height / 2);
+		if (fehler){
+			glyphLayout.setText(font, anzeige_text.substring(0, 1));
+			glyphLayout.setText(font, anzeige_text.substring(0, 1), new Color(1, 0, 0, 1), glyphLayout.width, (int) glyphLayout.height, false);
+			font.draw(batch, glyphLayout, 100, textfeldheight / 2 + glyphLayout.height / 2);
+		}
 
 
 		batch.draw(img_amaturrahmen, 0,0,Gdx.graphics.getWidth(),textfeldheight);
