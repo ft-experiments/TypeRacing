@@ -80,7 +80,7 @@ public class Main extends ApplicationAdapter {
 				if(anzeige_text.startsWith(Character.toString(character))) {
 					anzeige_text = anzeige_text.substring(1);
 					if (speed < 99) {
-						speed = speed + ((99 - speed) / 90);
+						speed = speed + ((99 - speed) / 95);
 					}
 
 					Gdx.app.log("Speed", String.valueOf(((99 - speed) / 97)));
@@ -139,7 +139,7 @@ neuesSpiel();
 
 
 
-				speed-=1;
+			speed = speed + ((99 - speed) / 95);
 
 
 if(speed>9) {
