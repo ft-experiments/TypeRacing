@@ -54,7 +54,7 @@ current_text=Texte.Text1;
 		batch = new SpriteBatch();
 		img_amatur = new Texture("amatur.png");
 		img_strasse = new Texture("strasse.png");
-		
+
 
 		Gdx.app.setLogLevel(Application.LOG_INFO);
 
@@ -173,7 +173,7 @@ if(speed>9) {
 		batch.draw(img_amatur, 0,0,Gdx.graphics.getWidth(),textfeldheight);
 
 		glyphLayout.setText(font, current_text);
-		font.draw(batch, glyphLayout, 200, textfeldheight );
+		font.draw(batch, glyphLayout, 100, textfeldheight/2+glyphLayout.height/2 );
 
 		batch.end();
 	}
