@@ -1,6 +1,7 @@
 package de.ft.typeracing;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -188,9 +189,17 @@ if(speed>9) {
 		batch.draw(img_amatur, 0,0,Gdx.graphics.getWidth(),textfeldheight);
 
 		glyphLayout.setText(font, anzeige_text);
+		glyphLayout.setText(font,anzeige_text,new Color(1,1,1,1),glyphLayout.width,(int)glyphLayout.height,false);
 		font.draw(batch, glyphLayout, 100, textfeldheight/2+glyphLayout.height/2 );
 
+		//glyphLayout.setText(font,anzeige_text.substring(0,1));
+		glyphLayout.setText(font,anzeige_text.substring(0,1),new Color(1,0,0,1),0,0,false);
+		font.draw(batch, glyphLayout, 100, textfeldheight/2+glyphLayout.height/2 );
+
+
+
 		batch.draw(img_amaturrahmen, 0,0,Gdx.graphics.getWidth(),textfeldheight);
+
 
 		batch.end();
 	}
