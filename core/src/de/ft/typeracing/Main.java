@@ -66,12 +66,6 @@ public class Main extends ApplicationAdapter {
 			@Override
 			public boolean keyDown(int keycode) {
 
-				if(speed<99) {
-					speed=speed+((99-speed)/95);
-				}
-
-		//		Gdx.app.log("Speed", String.valueOf(((99-speed)/97)));
-
 				return false;
 			}
 
