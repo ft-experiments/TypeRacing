@@ -16,21 +16,22 @@ public class Main extends ApplicationAdapter {
 	public static BitmapFont font;
 	private static final GlyphLayout glyphLayout = new GlyphLayout();
 
-	Texture img_strasse;
-	Texture img_amatur;
+	public static Texture img_strasse;
+	public static Texture img_amatur;
+	public static Texture img_amaturrahmen;
 
-	float speed = 0;
+	public static float speed = 0;
 
-	long millissave=0;
+	public static long millissave=0;
 
-	int strassenbewegungsposition=0;
-	int strasse_x=0;
-	int strasse_y=0;
+	public static int strassenbewegungsposition=0;
+	public static int strasse_x=0;
+	public static int strasse_y=0;
 
-	int textfeldheight=130;
+	public static int textfeldheight=130;
 
-	String current_text="";
-	String anzeige_text="";
+	public static String current_text="";
+	public static String anzeige_text="";
 
 
 
@@ -50,12 +51,12 @@ public class Main extends ApplicationAdapter {
 		}
 
 
-		current_text=Texte.Text5;
-		anzeige_text=current_text;
+
 
 		batch = new SpriteBatch();
 		img_amatur = new Texture("amatur.png");
 		img_strasse = new Texture("strasse.png");
+		img_amaturrahmen = new Texture("amaturrahmen.png");
 
 
 		Gdx.app.setLogLevel(Application.LOG_INFO);
@@ -115,8 +116,18 @@ public class Main extends ApplicationAdapter {
 
 
 
+neuesSpiel();
+	}
+
+	public static void neuesSpiel(){
+		current_text=Texte.Text5;
+		anzeige_text=current_text;
+	}
+	public static void SpielFertig(){
 
 	}
+
+
 	@Override
 	public void render () {
 		 //	Gdx.app.log("Average", String.valueOf(speed));
@@ -178,6 +189,8 @@ if(speed>9) {
 
 		glyphLayout.setText(font, anzeige_text);
 		font.draw(batch, glyphLayout, 100, textfeldheight/2+glyphLayout.height/2 );
+
+		batch.draw(img_amaturrahmen, 0,0,Gdx.graphics.getWidth(),textfeldheight);
 
 		batch.end();
 	}
