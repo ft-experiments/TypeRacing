@@ -2,6 +2,7 @@ package de.ft.typeracing.car;
 
 import com.badlogic.gdx.graphics.Texture;
 import de.ft.typeracing.Texte;
+import de.ft.typeracing.car.steuerung.NormalSteuerung;
 
 public class Car {
     CarSteuerung carSteuerung =null;

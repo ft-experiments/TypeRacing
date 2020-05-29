@@ -5,6 +5,9 @@ import de.ft.typeracing.car.CarSteuerung;
 
 public class NormalSteuerung implements CarSteuerung {
     public long millissave;
+    public NormalSteuerung(){
+
+    }
     @Override
     public float correctKeyTyped(float speed) {
         if (speed < 99) {

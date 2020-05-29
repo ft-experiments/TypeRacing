@@ -43,7 +43,7 @@ public class Main extends ApplicationAdapter {
 
 	public static long timelastpress=0;
 
-	public static Car spielerauto=new Car(new NormalSteuerung());
+	public static Car spielerauto=new Car(new NormalSteuerung(),img_amatur);
 	private static boolean fehlercounted = false;
 	public static int fehlercounter = 0;
 
