@@ -46,7 +46,7 @@ public class Main extends ApplicationAdapter {
 	public static Texture car1 = new Texture("cars/3_car.png");
 
 
-	public static Car spielerauto=new Car(new NormalSteuerung(),car1);
+	public static Car spielerauto=new Car(new NormalSteuerung(),car1,200,textfeldheight,100,50);
 	private static boolean fehlercounted = false;
 	public static int fehlercounter = 0;
 
