@@ -241,8 +241,8 @@ neuesSpiel();
 
 
 		batch.draw(img_amaturrahmen, 0,0,Gdx.graphics.getWidth(),textfeldheight);
-		float autoverkleinerung=2;
-		spielerauto.setBounds(200,(int)(strasse_y+strasse_y/autoverkleinerung),(int)(h_strasse/2*2/autoverkleinerung),(int)(h_strasse/2/autoverkleinerung));
+		float autoverkleinerung=0.5f;
+		spielerauto.setBounds(200,(int)(strasse_y+h_strasse/4-h_strasse/2*autoverkleinerung/2),(int)(h_strasse*autoverkleinerung),(int)(h_strasse/2*autoverkleinerung));
 		spielerauto.draw(batch);
 		batch.end();
 	}
