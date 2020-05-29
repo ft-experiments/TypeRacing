@@ -38,9 +38,16 @@ public class Main extends ApplicationAdapter {
 
 	public static boolean fehler=false;
 
+	public static long timebetweenpresses=0;
+	public static long presses=0;
+
+	public static long timelastpress=0;
 
 	public static Car spielerauto=new Car(new NormalSteuerung());
+	private static boolean fehlercounted = false;
+	public static int fehlercounter = 0;
 
+ public static float cpm = 0;
 
 
 	@Override
@@ -91,12 +98,37 @@ public class Main extends ApplicationAdapter {
 					anzeige_text = anzeige_text.substring(1);
 					speed=spielerauto.getCarSteuerung().correctKeyTyped(speed);
 					fehler=false;
+
+					if(presses>0) {
+
+
+						//Calc CPM
+						if(System.currentTimeMillis()-timelastpress<4000) {
+							presses++;
+							timebetweenpresses = timebetweenpresses + System.currentTimeMillis() - timelastpress;
+							timelastpress = System.currentTimeMillis();
+							cpm = (60000f/((float)timebetweenpresses / (float) presses));
+						}else{
+							timelastpress = System.currentTimeMillis();
+						}
+
+
+					}else{
+						presses=1;
+						timelastpress = System.currentTimeMillis();
+					}
+
 				}else{
 					fehler=true;
 
 					speed=spielerauto.getCarSteuerung().fehler(speed);
 
 				}
+
+
+
+
+
 				return false;
 			}
 
@@ -144,8 +176,6 @@ neuesSpiel();
 	@Override
 	public void render () {
 		//	Gdx.app.log("Average", String.valueOf(speed));
-
-
 		if (Gdx.input.isKeyJustPressed(Input.Keys.F) && Gdx.input.isKeyJustPressed(Input.Keys.T) && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
 			current_text = "You found an Easteregg. Viel Spaß damit noch! Vielen dank für die benutzung von TypeRacing!";
 			anzeige_text = current_text;
@@ -184,10 +214,21 @@ neuesSpiel();
 		glyphLayout.setText(font, anzeige_text, new Color(1, 1, 1, 1), glyphLayout.width, (int) glyphLayout.height, false);
 		font.draw(batch, glyphLayout, 100, textfeldheight / 2 + glyphLayout.height / 2);
 		if (fehler){
+
+			if(!fehlercounted) {
+				fehlercounter++;
+				fehlercounted = true;
+			}
+
 			glyphLayout.setText(font, anzeige_text.substring(0, 1));
 			glyphLayout.setText(font, anzeige_text.substring(0, 1), new Color(1, 0, 0, 1), glyphLayout.width, (int) glyphLayout.height, false);
 			font.draw(batch, glyphLayout, 100, textfeldheight / 2 + glyphLayout.height / 2);
 		}
+
+		if(!fehler&&fehlercounted) {
+			fehlercounted = false;
+		}
+
 
 
 		batch.draw(img_amaturrahmen, 0,0,Gdx.graphics.getWidth(),textfeldheight);

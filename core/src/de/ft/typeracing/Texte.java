@@ -20,6 +20,7 @@ public class Texte {//TODO Texte durch eigene texte ersetzten
         texte.add(Text5);
         texte.add(Text6);
         texte.add(Text7);
+        texte.add(Text8);
     }
     public static void addText(String text){
         texte.add(text);
