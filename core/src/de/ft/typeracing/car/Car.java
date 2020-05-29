@@ -15,6 +15,10 @@ public class Car {
 
     public Car(CarSteuerung carSteuerung, Texture img_car,int x,int y,int w,int h){
         this.carSteuerung=carSteuerung;
+        this.x=x;
+        this.y=y;
+        this.w=w;
+        this.h=h;
 
     }
 
