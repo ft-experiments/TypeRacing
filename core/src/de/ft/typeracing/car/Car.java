@@ -19,12 +19,21 @@ public class Car {
         this.y=y;
         this.w=w;
         this.h=h;
+        this.img_car=img_car;
 
+    }
+
+    public void setBounds(int x,int y,int w, int h){
+        this.x=x;
+        this.y=y;
+        this.w=w;
+        this.h=h;
     }
 
 
     public void draw(SpriteBatch batch){
         batch.draw(img_car,x,y,w,h);
+
     }
 
     public CarSteuerung getCarSteuerung() {

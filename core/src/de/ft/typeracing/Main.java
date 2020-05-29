@@ -43,19 +43,22 @@ public class Main extends ApplicationAdapter {
 
 	public static long timelastpress=0;
 
-	public static Texture car1 = new Texture("cars/3_car.png");
+	public static Texture car1 ;
 
 
-	public static Car spielerauto=new Car(new NormalSteuerung(),car1,200,textfeldheight,100,50);
+	public static Car spielerauto;
 	private static boolean fehlercounted = false;
 	public static int fehlercounter = 0;
 
  public static float cpm = 0;
 
 
+	public static int h_strasse=0;
+
 	@Override
 	public void create () {
-
+		car1 = new Texture("cars/3_car.png");
+		spielerauto=new Car(new NormalSteuerung(),car1,200,textfeldheight,100,50);
 
 
 
@@ -207,8 +210,11 @@ neuesSpiel();
 			strassenbewegungsposition = 0;
 		}
 		strasse_y = textfeldheight;
-		batch.draw(img_strasse, strasse_x - strassenbewegungsposition, strasse_y, img_strasse.getWidth(), Gdx.graphics.getHeight() - textfeldheight);
-		batch.draw(img_strasse, strasse_x - strassenbewegungsposition + img_strasse.getWidth(), strasse_y, img_strasse.getWidth(), Gdx.graphics.getHeight() - textfeldheight);
+
+		h_strasse=Gdx.graphics.getHeight() - textfeldheight;
+
+		batch.draw(img_strasse, strasse_x - strassenbewegungsposition, strasse_y, img_strasse.getWidth(), h_strasse);
+		batch.draw(img_strasse, strasse_x - strassenbewegungsposition + img_strasse.getWidth(), strasse_y, img_strasse.getWidth(), h_strasse);
 		//batch.draw(img_strasse, strasse_x+strassenbewegungsposition+img_strasse.getWidth(), strasse_y);
 
 		batch.draw(img_amatur, 0, 0, Gdx.graphics.getWidth(), textfeldheight);
@@ -235,8 +241,9 @@ neuesSpiel();
 
 
 		batch.draw(img_amaturrahmen, 0,0,Gdx.graphics.getWidth(),textfeldheight);
-
-
+		float autoverkleinerung=2;
+		spielerauto.setBounds(200,(int)(strasse_y+strasse_y/autoverkleinerung),(int)(h_strasse/2*2/autoverkleinerung),(int)(h_strasse/2/autoverkleinerung));
+		spielerauto.draw(batch);
 		batch.end();
 	}
 	
