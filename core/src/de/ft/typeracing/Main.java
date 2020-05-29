@@ -43,10 +43,10 @@ public class Main extends ApplicationAdapter {
 
 	public static long timelastpress=0;
 
+	public static Texture car1 = new Texture("cars/3_car.png");
 
 
-
-	public static Car spielerauto=new Car(new NormalSteuerung(),img_amatur);
+	public static Car spielerauto=new Car(new NormalSteuerung(),car1);
 	private static boolean fehlercounted = false;
 	public static int fehlercounter = 0;
 
