@@ -16,8 +16,11 @@ public class AutonomCar {
     float iwert=0.6f;
     Texture img_car;
     float sollspeedalt=-999;
-    public AutonomCar(Texture img_car){
+    public AutonomCar(Texture img_car,float pwert,float iwert, float d){
         this.img_car=img_car;
+        this.pwert = pwert;
+        this.iwert = iwert;
+        this.d =d;
     }
 
     public void draw(SpriteBatch batch){

@@ -81,10 +81,10 @@ public class Main extends ApplicationAdapter {
 
 		spielerauto=new Car(new NormalSteuerung(),img_car1,200,textfeldheight,100,50);
 
-		gegnerauto_1=new AutonomCar(img_car2);
-		gegnerauto_2=new AutonomCar(img_car3);
-		gegnerauto_3=new AutonomCar(img_car2);
-		gegnerauto_4=new AutonomCar(img_car3);
+		gegnerauto_1=new AutonomCar(img_car2,1f,0.6f,0f);
+		gegnerauto_2=new AutonomCar(img_car3,1f,0.6f,0f);
+		gegnerauto_3=new AutonomCar(img_car2,1f,0.6f,0f);
+		gegnerauto_4=new AutonomCar(img_car3,1f,0.6f,0f);
 
 
 
