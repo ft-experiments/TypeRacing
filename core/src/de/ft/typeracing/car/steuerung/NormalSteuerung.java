@@ -27,14 +27,24 @@ public class NormalSteuerung implements CarSteuerung {
     public float dagegenarbeiter(float speed) {
         if (System.currentTimeMillis() > millissave) {
 
+
             speed -= 1;
-            if(speed<0){
-                speed=0;
+
+
+            if (speed > 9) {
+
+                if (speed < 34) {
+                    millissave = (long) ((long) System.currentTimeMillis() + 250 - speed * 2);
+                } else {
+                    millissave = System.currentTimeMillis() + 180;
+                }
+            } else {
+                millissave = System.currentTimeMillis() + 600;
+            }
+            if (speed < 0) {
+                speed = 0;
             }
 
-
-
-        millissave=System.currentTimeMillis()+400;
         }
      return speed;
     }
