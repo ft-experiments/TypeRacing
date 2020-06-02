@@ -1,6 +1,7 @@
 package de.ft.typeracing.car.steuerung;
 
 import com.badlogic.gdx.Gdx;
+import de.ft.typeracing.Main;
 import de.ft.typeracing.car.CarSteuerung;
 
 public class NormalSteuerung implements CarSteuerung {
@@ -20,6 +21,7 @@ public class NormalSteuerung implements CarSteuerung {
 
 
         }
+        Main.durchschnittsspeed(speed);
         return speed;
     }
 
@@ -46,11 +48,17 @@ public class NormalSteuerung implements CarSteuerung {
             }
 
         }
-     return speed;
+
+        return speed;
     }
 
     @Override
     public float fehler(float speed) {
-        return speed = speed - speed / 4.5f;
+        Main.durchschnittsspeed(speed);
+        speed=speed-1.5f;
+        if(speed<0){
+            speed=0;
+        }
+        return speed;
     }
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import de.ft.typeracing.car.AutonomCar;
 import de.ft.typeracing.car.Car;
 import de.ft.typeracing.car.steuerung.NormalSteuerung;
 
@@ -43,22 +44,34 @@ public class Main extends ApplicationAdapter {
 
 	public static long timelastpress=0;
 
-	public static Texture car1 ;
+	public static Texture img_car1;
+	public static Texture  img_car2;
 
 
 	public static Car spielerauto;
+	public static AutonomCar gegnerauto;
 	private static boolean fehlercounted = false;
 	public static int fehlercounter = 0;
+	public static long millissave2=0;
 
  public static float cpm = 0;
 
 
 	public static int h_strasse=0;
 
+	public static float durchschnittsspeedrechner=0;
+	public static float values =0;
+	public static float durchschnittsspeed=0;
+
+
+
+
 	@Override
 	public void create () {
-		car1 = new Texture("cars/3_car.png");
-		spielerauto=new Car(new NormalSteuerung(),car1,200,textfeldheight,100,50);
+		img_car1 = new Texture("cars/3_car.png");
+		img_car2 = new Texture("cars/2_car.png");
+		spielerauto=new Car(new NormalSteuerung(),img_car1,200,textfeldheight,100,50);
+		gegnerauto=new AutonomCar(img_car2);
 
 
 
@@ -165,8 +178,27 @@ public class Main extends ApplicationAdapter {
 		});
 
 
-
+gegnerauto.setX(200);
 neuesSpiel();
+	}
+
+	public synchronized static void durchschnittsspeed(float speed){
+		values++;
+		durchschnittsspeedrechner+=speed;
+		durchschnittsspeed=durchschnittsspeedrechner/values;
+		Gdx.app.log("durchschnittsspeed: ",String.valueOf(durchschnittsspeed));
+
+
+		if(values>30) {
+
+			durchschnittsspeedrechner=durchschnittsspeedrechner/values;
+			durchschnittsspeed = durchschnittsspeedrechner;
+			values=1;
+
+		}
+
+		gegnerauto.setSollSpeed(durchschnittsspeed);
+
 	}
 
 	public static void neuesSpiel(){
@@ -189,7 +221,10 @@ neuesSpiel();
 
 			speed=spielerauto.getCarSteuerung().dagegenarbeiter(speed);
 
-
+		if (System.currentTimeMillis() > millissave2) {
+			durchschnittsspeed(speed);
+			millissave2=System.currentTimeMillis()+500;
+		}
 
 
 
@@ -205,7 +240,7 @@ neuesSpiel();
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		strassenbewegungsposition += (int) speed;
+		strassenbewegungsposition +=  speed;
 		if (strassenbewegungsposition > img_strasse.getWidth()) {
 			strassenbewegungsposition = 0;
 		}
@@ -215,7 +250,6 @@ neuesSpiel();
 
 		batch.draw(img_strasse, strasse_x - strassenbewegungsposition, strasse_y, img_strasse.getWidth(), h_strasse);
 		batch.draw(img_strasse, strasse_x - strassenbewegungsposition + img_strasse.getWidth(), strasse_y, img_strasse.getWidth(), h_strasse);
-		//batch.draw(img_strasse, strasse_x+strassenbewegungsposition+img_strasse.getWidth(), strasse_y);
 
 		batch.draw(img_amatur, 0, 0, Gdx.graphics.getWidth(), textfeldheight);
 
@@ -244,6 +278,8 @@ neuesSpiel();
 		float autoverkleinerung=0.5f;
 		spielerauto.setBounds(200,(int)(strasse_y+h_strasse/4-h_strasse/2*autoverkleinerung/2),(int)(h_strasse*autoverkleinerung),(int)(h_strasse/2*autoverkleinerung));
 		spielerauto.draw(batch);
+		gegnerauto.setBounds((int)(strasse_y+(h_strasse/4*3)-h_strasse/2*autoverkleinerung/2),(int)(h_strasse*autoverkleinerung),(int)(h_strasse/2*autoverkleinerung));
+		gegnerauto.draw(batch);
 		batch.end();
 	}
 	
