@@ -46,10 +46,17 @@ public class Main extends ApplicationAdapter {
 
 	public static Texture img_car1;
 	public static Texture  img_car2;
+	public static Texture img_car3;
 
 
 	public static Car spielerauto;
-	public static AutonomCar gegnerauto;
+
+	public static AutonomCar gegnerauto_1;
+	public static AutonomCar gegnerauto_2;
+	public static AutonomCar gegnerauto_3;
+	public static AutonomCar gegnerauto_4;
+
+
 	private static boolean fehlercounted = false;
 	public static int fehlercounter = 0;
 	public static long millissave2=0;
@@ -68,10 +75,16 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		img_car1 = new Texture("cars/3_car.png");
+		img_car1 = new Texture("cars/1_car.png");
 		img_car2 = new Texture("cars/2_car.png");
+		img_car3 = new Texture("cars/3_car.png");
+
 		spielerauto=new Car(new NormalSteuerung(),img_car1,200,textfeldheight,100,50);
-		gegnerauto=new AutonomCar(img_car2);
+
+		gegnerauto_1=new AutonomCar(img_car2);
+		gegnerauto_2=new AutonomCar(img_car3);
+		gegnerauto_3=new AutonomCar(img_car2);
+		gegnerauto_4=new AutonomCar(img_car3);
 
 
 
@@ -178,7 +191,10 @@ public class Main extends ApplicationAdapter {
 		});
 
 
-gegnerauto.setX(200);
+		gegnerauto_1.setX(200);
+		gegnerauto_2.setX(200);
+		gegnerauto_3.setX(200);
+		gegnerauto_4.setX(200);
 neuesSpiel();
 	}
 
@@ -197,7 +213,12 @@ neuesSpiel();
 
 		}
 
-		gegnerauto.setSollSpeed(durchschnittsspeed);
+		gegnerauto_1.setSollSpeed(durchschnittsspeed);
+		gegnerauto_2.setSollSpeed(durchschnittsspeed);
+		gegnerauto_3.setSollSpeed(durchschnittsspeed);
+		gegnerauto_4.setSollSpeed(durchschnittsspeed);
+
+
 
 	}
 
@@ -275,11 +296,23 @@ neuesSpiel();
 
 
 		batch.draw(img_amaturrahmen, 0,0,Gdx.graphics.getWidth(),textfeldheight);
-		float autoverkleinerung=0.5f;
-		spielerauto.setBounds(200,(int)(strasse_y+h_strasse/4-h_strasse/2*autoverkleinerung/2),(int)(h_strasse*autoverkleinerung),(int)(h_strasse/2*autoverkleinerung));
+
+		float autoverkleinerung=0.28f;
+
+		spielerauto.setBounds(200,(int)(strasse_y+(h_strasse/10*5)-h_strasse/2*autoverkleinerung/2),(int)(h_strasse*autoverkleinerung),(int)(h_strasse/2*autoverkleinerung));
 		spielerauto.draw(batch);
-		gegnerauto.setBounds((int)(strasse_y+(h_strasse/4*3)-h_strasse/2*autoverkleinerung/2),(int)(h_strasse*autoverkleinerung),(int)(h_strasse/2*autoverkleinerung));
-		gegnerauto.draw(batch);
+
+
+		gegnerauto_1.setBounds((int)(strasse_y+(h_strasse/10*1)-h_strasse/2*autoverkleinerung/2),(int)(h_strasse*autoverkleinerung),(int)(h_strasse/2*autoverkleinerung));
+		gegnerauto_1.draw(batch);
+		gegnerauto_2.setBounds((int)(strasse_y+(h_strasse/10*3)-h_strasse/2*autoverkleinerung/2),(int)(h_strasse*autoverkleinerung),(int)(h_strasse/2*autoverkleinerung));
+		gegnerauto_2.draw(batch);
+		gegnerauto_3.setBounds((int)(strasse_y+(h_strasse/10*7)-h_strasse/2*autoverkleinerung/2),(int)(h_strasse*autoverkleinerung),(int)(h_strasse/2*autoverkleinerung));
+		gegnerauto_3.draw(batch);
+		gegnerauto_4.setBounds((int)(strasse_y+(h_strasse/10*9)-h_strasse/2*autoverkleinerung/2),(int)(h_strasse*autoverkleinerung),(int)(h_strasse/2*autoverkleinerung));
+		gegnerauto_4.draw(batch);
+
+
 		batch.end();
 	}
 	
