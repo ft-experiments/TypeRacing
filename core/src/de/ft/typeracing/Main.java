@@ -202,7 +202,7 @@ neuesSpiel();
 		values++;
 		durchschnittsspeedrechner+=speed;
 		durchschnittsspeed=durchschnittsspeedrechner/values;
-		Gdx.app.log("durchschnittsspeed: ",String.valueOf(durchschnittsspeed));
+		Gdx.app.log("durchschnittsspeed: ",String.valueOf(durchschnittsspeed)+"  speed: "+Main.speed);
 
 
 		if(values>30) {

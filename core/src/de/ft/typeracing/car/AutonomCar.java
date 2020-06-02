@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import de.ft.typeracing.Main;
 
 public class AutonomCar {
-    float sollmindestgeschwindigkeit=4;
+    float sollmindestgeschwindigkeit=5;
     float mindestgeschwindig=0;
     float d=0;
     float sollSpeed=0;
@@ -25,7 +25,7 @@ public class AutonomCar {
 
     public void draw(SpriteBatch batch){
             mindestgeschwindig-=((mindestgeschwindig-sollmindestgeschwindigkeit)*0.01f);
-
+            sollSpeed+=1-Math.random()*2;
             if(sollspeedalt!=sollSpeed) {
                 speed -= ((speed - sollSpeed) * pwert + (speed - sollSpeed + d) * iwert);
                 d += (speed - sollSpeed);
